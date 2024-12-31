@@ -18,7 +18,7 @@ const Navbar = () => {
     <div>
       <nav className="navbar">
         <Link to="/">
-          <h1>Sore Eyes Zone</h1>
+          <h2>Sore Eyes Zone</h2>
         </Link>
 
         <div

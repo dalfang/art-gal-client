@@ -40,7 +40,6 @@ const HomePage = () => {
 
   return (
     <div className="gallery-list-container">
-      <h1>Gallery</h1>
       <div className="gallery-list">
         {galleries.map((oneGallery) => (
           <Link
@@ -52,17 +51,18 @@ const HomePage = () => {
           >
             <div>
               <h2>{oneGallery.name}</h2>
-              {/* Check if the images array has any elements and display the first one */}
-              {oneGallery.images && oneGallery.images.length > 0 && (
-                <img
-                  src={oneGallery.images[0]}
-                  alt={oneGallery.name}
-                  style={{
-                    opacity: hoveredGallery === oneGallery._id ? 0.7 : 1,
-                    transition: "opacity 0.3s",
-                  }}
-                />
-              )}
+              {hoveredGallery === oneGallery._id &&
+                oneGallery.images &&
+                oneGallery.images.length > 0 && (
+                  <img
+                    src={oneGallery.images[0]}
+                    alt={oneGallery.name}
+                    style={{
+                      opacity: 1,
+                      transition: "opacity 0.3s",
+                    }}
+                  />
+                )}
             </div>
           </Link>
         ))}
