@@ -10,6 +10,7 @@ const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
@@ -36,7 +37,13 @@ const SignupPage = () => {
         },
       };
       await axios.post(`${API_URL}/auth/signup`, formData, config);
+      setSuccessMessage("Signup successful! Please log in.");
+      setErrorMessage("");
+      setTimeout(() => {
+        nav("/login");
+      }, 3000);
     } catch (err) {
+      setSuccessMessage("");
       if (err.response && err.response.data && err.response.data.errorMessage) {
         setErrorMessage(err.response.data.errorMessage);
       } else {
@@ -102,6 +109,7 @@ const SignupPage = () => {
         <input type="file" name="image" onChange={handleImageChange} />
         {imagePreview && <img src={imagePreview} alt="Preview" width="100" />}
 
+        {successMessage && <p className="success-message">{successMessage}</p>}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
         <button type="submit">Sign Up</button>
