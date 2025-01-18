@@ -36,6 +36,25 @@ const GalleryPage = () => {
     setSelectedSize(event.target.value);
   };
 
+  const handleAddFavorite = async () => {
+    try {
+      if (!currentUser) {
+        alert("Please log in to add to favorites!");
+        return;
+      }
+
+      const favoriteData = {
+        user: currentUser?._id,
+        gallery: oneGallery?._id,
+      };
+
+      await axios.post(`${API_URL}/favorites`, favoriteData);
+      alert("Added to favorites!");
+    } catch (error) {
+      console.error("Failed to add to favorites:", error);
+    }
+  };
+
   const handlePreview = async (e) => {
     e.preventDefault();
     try {
@@ -46,6 +65,7 @@ const GalleryPage = () => {
         price: calculatePrice(selectedSize),
       };
       const { data } = await axios.post(`${API_URL}/orders`, orderData);
+      //alert("Order successfully placed!");
       navigate(`/tohave/${data._id}`);
     } catch (error) {
       console.error("Failed to create order:", error);
@@ -104,9 +124,13 @@ const GalleryPage = () => {
           <h3>Product price: €{calculatePrice(selectedSize)}</h3>
         </div>
         <button type="submit" className="submit-button">
-          Preview
+          Order now!
         </button>
       </form>
+      <button onClick={handleAddFavorite} className="favorite-button">
+        Add to Favorites
+      </button>
+
       <button onClick={() => navigate("/")} className="back-button">
         Back to Galleries
       </button>
